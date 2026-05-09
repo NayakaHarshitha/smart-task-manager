@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Smart Task Manager</h1>
+
+<a href="/logout" class="logout-btn">
+    Logout
+</a>
+
+<h2>Analytics Dashboard</h2>
+
+<div class="analytics">
+
+    <div class="card">
+        <h3>Total Tasks</h3>
+        <p>{{ analytics.total_tasks }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Completed</h3>
+        <p>{{ analytics.completed_tasks }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <p>{{ analytics.pending_tasks }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Completion %</h3>
+        <p>{{ analytics.completion_percentage }}%</p>
+    </div>
+
+</div>
+
+<hr>
+
+<h2>Add New Task</h2>
+
+<form method="POST" action="/add-task">
+
+    <label for="title">
+        Task Title
+    </label>
+
+    <input type="text"
+        id="title"
+        name="title"
+        placeholder="Enter Task Title"
+        required>
+
+    <label for="description">
+        Description
+    </label>
+
+    <textarea
+        id="description"
+        name="description"
+        placeholder="Task Description"></textarea>
+
+    <label for="priority">
+        Priority
+    </label>
+
+    <select name="priority" id="priority">
+
+        <option value="High">High</option>
+
+        <option value="Medium">Medium</option>
+
+        <option value="Low">Low</option>
+
+    </select>
+
+    <label for="status">
+        Status
+    </label>
+
+    <select name="status" id="status">
+
+        <option value="Pending">Pending</option>
+
+        <option value="Completed">Completed</option>
+
+    </select>
+
+    <button type="submit">
+        Add Task
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Task List</h2>
+
+<table>
+
+    <tr>
+
+        <th>Title</th>
+
+        <th>Description</th>
+
+        <th>Priority</th>
+
+        <th>Status</th>
+
+        <th>Created Date</th>
+
+        <th>Action</th>
+
+    </tr>
+
+    {% for task in tasks %}
+
+    <tr>
+
+        <td>{{ task.title }}</td>
+
+        <td>{{ task.description }}</td>
+
+        <td>{{ task.priority }}</td>
+
+        <td>{{ task.status }}</td>
+
+        <td>{{ task.created_date }}</td>
+
+        <td>
+
+            <a href="/delete-task/{{ task.id }}"
+                class="delete-btn">
+
+                Delete
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
