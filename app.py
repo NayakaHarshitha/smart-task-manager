@@ -1,15 +1,11 @@
 from flask import Flask, redirect
-
 from flask_login import LoginManager
-
 from flask_socketio import SocketIO
 
 from config import Config
-
 from models.models import db, User
 
 from routes.auth_routes import auth
-
 from routes.task_routes import task
 
 app = Flask(__name__)
@@ -44,10 +40,11 @@ app.register_blueprint(auth)
 app.register_blueprint(task)
 
 
+with app.app_context():
+
+    db.create_all()
+
+
 if __name__ == '__main__':
-
-    with app.app_context():
-
-        db.create_all()
 
     socketio.run(app, debug=True)
